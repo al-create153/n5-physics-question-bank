@@ -36,7 +36,7 @@ h2{text-wrap:balance}
 .unit h2{font:600 .78rem var(--f-mono);margin:0 0 10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;align-items:baseline}
 .unit h2 span{font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:400}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--tile);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:grid;grid-template-rows:auto auto 1fr auto;gap:2px;min-height:118px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--tile);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:grid;grid-template-rows:1fr auto auto;gap:4px;min-height:96px}
 .tile:hover{border-color:var(--accent)}
 .tile:focus-visible,button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .trow{display:flex;justify-content:flex-end;align-items:baseline;gap:6px}
@@ -315,7 +315,7 @@ function renderHome(){
     sec.appendChild(el('h2',null,`${u} <span>${tot} questions</span>`));const g=el('div',{class:'tiles'});
     ts.forEach(t=>{const list=byTopic(t.k).filter(allowed);const nm=list.filter(q=>q.t==='m').length,ns=list.length-nm;
       const b=el('button',{class:'tile','aria-label':t.name});
-      b.innerHTML=`<div class="trow"><span class="rel">${t.rel}</span></div><span class="tname">${t.name}</span><span></span><span class="cnt">${nm} MC · ${ns} Section 2</span>${progBar(list)}`;
+      b.innerHTML=`<span class="tname">${t.name}</span><span class="cnt">${nm} MC · ${ns} Section 2</span>${progBar(list)}`;
       b.onclick=()=>openMenu(t.k);g.appendChild(b)});
     sec.appendChild(g);box.appendChild(sec)});
   const all=DATA.qs.filter(allowed);const done=all.filter(q=>prog[q.id]).length;
