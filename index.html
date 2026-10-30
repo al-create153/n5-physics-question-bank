@@ -146,7 +146,6 @@ button.b.ghost:hover{border-color:var(--line);color:var(--ink)}
       <div class="bar" style="margin-top:10px"><button class="b pri" id="mixBtn">Mixed practice across topics</button><span class="msg" id="overall"></span></div>
     </div>
     <div id="units"></div>
-    <p class="foot">Questions and marking instructions © SQA / Qualifications Scotland, reproduced for non-commercial classroom use from the N5 Physics past paper collection (September 2026 update). Topic placements follow that collection's question tables. Multiple choice explanations, open-ended suggested points and the typed relationships sheet are written by Claude (Anthropic AI), not SQA. Papers from 2014 to 2017 are from the course before the 2017–18 changes. “2020” is the label the collection uses for that paper. Your progress is saved in this browser only.</p>
   </div>
 
   <div id="menu" hidden>
@@ -224,7 +223,7 @@ button.b.ghost:hover{border-color:var(--line);color:var(--ink)}
         <button class="b" id="setClear">Clear set</button>
         <span class="msg" id="pdfMsg"></span>
       </div>
-      <p class="note">The PDF opens in a new tab as a preview. Use your browser's download or print button there. If nothing opens, allow pop-ups for this page.</p>
+      <p class="note">PDFs open in a new tab.</p>
     </div>
     <div class="panel">
       <h2>Build a set by topic</h2>
@@ -257,10 +256,9 @@ button.b.ghost:hover{border-color:var(--line);color:var(--ink)}
 
 <div class="drawer" id="drawer" hidden role="dialog" aria-label="Data and relationships">
   <div class="row"><div class="tabs"><button class="b" data-tab="data">Data sheet</button><button class="b" data-tab="rel">Relationships</button></div><button class="b" id="dclose">Close</button></div>
-  <div id="dData"><div class="sheet"><img id="dsImg" alt="N5 Physics data sheet"></div><p class="note">Data sheet from the 2025 question paper.</p></div>
+  <div id="dData"><div class="sheet"><img id="dsImg" alt="N5 Physics data sheet"></div></div>
   <div id="dRel" hidden>
     <div class="rels" id="relGrid"></div>
-    <p class="note">Typed by Claude from the SQA N5 Physics relationships sheet. Check against the <a href="https://www.sqa.org.uk/files_ccc/PhysicsSQPN5RelationSheet.pdf" target="_blank" rel="noopener">official sheet</a>.</p>
   </div>
 </div>
 
@@ -382,11 +380,11 @@ function answerMC(q,L,btn){const ok=L===q.a;document.querySelectorAll('#mcopts b
   if(!(q.id in qz.res)||qz.res[q.id]!=='got'){prog[q.id]=ok?'got':'not';qz.res[q.id]=prog[q.id];store.set('n5p-prog',prog)}
   if(ok)showAnswer(q)}
 function showAnswer(q){const a=$('abox');a.innerHTML='';
-  if(q.t==='m'){a.className='ans';a.innerHTML=`<div class="lbl">Answer</div><div class="big">${q.a}</div>`+(q.x?`<p>${q.x}</p><p class="note">Explanation written by Claude, not SQA.</p>`:'');
+  if(q.t==='m'){a.className='ans';a.innerHTML=`<div class="lbl">Answer</div><div class="big">${q.a}</div>`+(q.x?`<p>${q.x}</p>`:'');
     document.querySelectorAll('#mcopts button').forEach(b=>{if(b.textContent===q.a)b.classList.add('right')})}
   else{a.className='';
     if(q.mi&&q.mi.length){const s=el('div',{class:'sheet'});q.mi.forEach(f=>s.appendChild(imgEl(q.p,f,`Marking instructions for ${pname(q.p)} question ${q.n}`)));a.appendChild(el('div',{class:'seglbl'},'MARKING INSTRUCTIONS'));a.appendChild(s)}
-    if(q.oe){const d=el('div',{class:'ans'});d.innerHTML=`<div class="lbl">Open-ended question · 3 marks</div><p><b>3 marks:</b> good understanding, with a correct statement of the relevant physics and a logically correct answer.<br><b>2 marks:</b> reasonable understanding, with statements made that show the problem is understood.<br><b>1 mark:</b> limited understanding, with at least one correct, relevant statement.<br><b>0 marks:</b> no relevant physics.</p>`+(q.pts?`<div class="lbl" style="margin-top:12px">Points you could make</div><ul>${q.pts.map(x=>`<li>${x}</li>`).join('')}</ul><p class="note">Suggested points written by Claude, not SQA. Many other approaches gain full marks.</p>`:'');a.appendChild(d)}
+    if(q.oe){const d=el('div',{class:'ans'});d.innerHTML=`<div class="lbl">Open-ended question · 3 marks</div><p><b>3 marks:</b> good understanding, with a correct statement of the relevant physics and a logically correct answer.<br><b>2 marks:</b> reasonable understanding, with statements made that show the problem is understood.<br><b>1 mark:</b> limited understanding, with at least one correct, relevant statement.<br><b>0 marks:</b> no relevant physics.</p>`+(q.pts?`<div class="lbl" style="margin-top:12px">Points you could make</div><ul>${q.pts.map(x=>`<li>${x}</li>`).join('')}</ul>`:'');a.appendChild(d)}
     if(!(q.mi&&q.mi.length)&&!q.oe)a.appendChild(el('p',{class:'msg'},'The marking instructions for this question are not in the source collection.'));
     $('ratebox').hidden=false;document.querySelectorAll('#ratebox button').forEach(b=>b.classList.toggle('sel',b.dataset.r===prog[q.id]))}
   a.hidden=false}
